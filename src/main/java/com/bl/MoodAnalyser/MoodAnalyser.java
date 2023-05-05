@@ -3,31 +3,51 @@ package com.bl.MoodAnalyser;
 public class MoodAnalyser
 {
     private String message;
+
         public MoodAnalyser(String message) {
             this.message = message;
         }
-
-        public String moodAnalyze() {
-            if (message.trim().toLowerCase().contains("sad")) {
-                return "SAD";
-            }else {
-                return "HAPPY";
+        public String analyseMood() throws MoodAnalysisException {
+            try {
+                if (message.contains("happy")) {
+                    return "Happy";
+                } else if (message.contains("sad")) {
+                    return "Sad";
+                } else {
+                    throw new MoodAnalysisException("Invalid mood");
+                }
+            } catch (NullPointerException e) {
+                throw new MoodAnalysisException("Invalid mood");
             }
         }
+
         public static void main(String[] args) {
-         MoodAnalyser analyzer = new MoodAnalyser("I am in Happy Mood");
+            MoodAnalyser analyser1 = new MoodAnalyser("I am happy today");
+            try {
+                System.out.println(analyser1.analyseMood()); // Output: Happy
+            } catch (MoodAnalysisException e) {
+                e.printStackTrace();
+            }
 
-            String hAnalyse = analyzer.moodAnalyze();
-            System.out.println("Mood Is: " + hAnalyse);
+            MoodAnalyser analyser2 = new MoodAnalyser("I am not feeling good");
+            try {
+                System.out.println(analyser2.analyseMood()); // Output: Sad
+            } catch (MoodAnalysisException e) {
+                e.printStackTrace();
+            }
 
-           MoodAnalyser analyser = new MoodAnalyser("I am in SAD mood");
-
-            String sAnalyse = analyser.moodAnalyze();
-            System.out.println("Mood Is: " + sAnalyse);
-
-           MoodAnalyser check = new MoodAnalyser("I am Not in any mood");
-            String any = check.moodAnalyze();
-            System.out.println("Mood Is: " + any);
+            MoodAnalyser analyser3 = new MoodAnalyser(null);
+            try {
+                System.out.println(analyser3.analyseMood());
+            } catch (MoodAnalysisException e) {
+                e.printStackTrace(); // Output: Invalid mood
+            }
         }
+
     }
 
+    class MoodAnalysisException extends Exception {
+        public MoodAnalysisException(String message) {
+            super(message);
+        }
+    }
