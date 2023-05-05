@@ -29,5 +29,10 @@ public class Test_Mood
             assertEquals("HAPPY", mood);
             System.out.println(mood);
         }
+    @Test
+    public void testAnalyseMoodNull() {
+        MoodAnalyser moodAnalyser = new MoodAnalyser(null);
+        assertEquals("HAPPY", moodAnalyser.moodAnalyze());
+    }
     }
 

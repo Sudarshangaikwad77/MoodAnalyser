@@ -1,5 +1,7 @@
 package com.bl.MoodAnalyser;
 
+import java.security.InvalidParameterException;
+
 public class MoodAnalyser
 {
     private String message;
@@ -8,10 +10,21 @@ public class MoodAnalyser
         }
 
         public String moodAnalyze() {
-            if (message.trim().toLowerCase().contains("sad")) {
-                return "SAD";
-            }else {
-                return "HAPPY";
+
+            try {
+                if (message.trim().toLowerCase().contains("sad")) {
+                    return "SAD";
+                }
+                else if (message.trim().toLowerCase().contains("happy")){
+                    return "HAPPY";
+                }
+                else {
+                throw new Exception("happy");
+            }
+            }
+            catch (Exception e)
+            {
+              return "HAPPY";
             }
         }
         public static void main(String[] args) {
@@ -25,7 +38,7 @@ public class MoodAnalyser
             String sAnalyse = analyser.moodAnalyze();
             System.out.println("Mood Is: " + sAnalyse);
 
-           MoodAnalyser check = new MoodAnalyser("I am Not in any mood");
+           MoodAnalyser check = new MoodAnalyser(" ");
             String any = check.moodAnalyze();
             System.out.println("Mood Is: " + any);
         }
