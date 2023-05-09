@@ -1,46 +1,38 @@
 package com.bl.MoodAnalyser;
 
-import java.security.InvalidParameterException;
+import java.util.Objects;
 
-public class MoodAnalyser
-{
-    private String message;
-        public MoodAnalyser(String message) {
-            this.message = message;
-        }
+// MoodAnalyser class that analyses the mood based on the message
+public class MoodAnalyser {
 
-        public String moodAnalyze() {
+    // Method to analyse the mood based on the message
 
-            try {
-                if (message.trim().toLowerCase().contains("sad")) {
-                    return "SAD";
-                }
-                else if (message.trim().toLowerCase().contains("happy")){
-                    return "HAPPY";
-                }
-                else {
-                throw new Exception("happy");
+    private static String message;
+    public MoodAnalyser(String message) {
+        this.message = message;
+    }
+
+    public String analyseMood() throws MoodAnalysisException {
+            // Throw MoodAnalysisException if message is null or empty
+            if (Objects.isNull(message)) {
+                throw new MoodAnalysisException(MoodAnalysisError.NULL_MESSAGE_ERROR);
+            } else if (message.trim().isEmpty()) {
+                throw new MoodAnalysisException(MoodAnalysisError.EMPTY_MESSAGE_ERROR);
             }
+
+            // Analyse the mood based on the message
+            if (message.contains("happy")) {
+                return "happy";
+            } else if (message.contains("sad")) {
+                return "sad";
+            } else {
+                return "unknown";
             }
-            catch (Exception e)
-            {
-              return "HAPPY";
-            }
-        }
-        public static void main(String[] args) {
-         MoodAnalyser analyzer = new MoodAnalyser("I am in Happy Mood");
-
-            String hAnalyse = analyzer.moodAnalyze();
-            System.out.println("Mood Is: " + hAnalyse);
-
-           MoodAnalyser analyser = new MoodAnalyser("I am in SAD mood");
-
-            String sAnalyse = analyser.moodAnalyze();
-            System.out.println("Mood Is: " + sAnalyse);
-
-           MoodAnalyser check = new MoodAnalyser(" ");
-            String any = check.moodAnalyze();
-            System.out.println("Mood Is: " + any);
         }
     }
+
+
+
+
+
 
